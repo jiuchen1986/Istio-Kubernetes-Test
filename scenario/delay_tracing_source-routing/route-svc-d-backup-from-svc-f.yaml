@@ -1,21 +1,23 @@
-# Inject 20ms delay into the svc-d
+# route the requests from svc-f to svc-d to the svc-d-backup
 
 apiVersion: config.istio.io/v1alpha2
 kind: RouteRule
 metadata:
-  name: delay-svc-d-20ms
+  name: route-svc-d-backup-from-svc-f
   namespace: default
 spec:
   destination:
     name: svc-d
-  httpFault:
-    delay:
-      fixedDelay: 20ms
-      percent: 100
-  precedence: 1
+  match:
+    source:
+      name: svc-f
+      labels:
+        version: v1
+        role: normal
+  precedence: 20
   route:
   - labels:
       version: v1
-      role: normal
+      role: backup
 ---
 

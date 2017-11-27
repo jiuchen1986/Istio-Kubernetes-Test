@@ -12,7 +12,7 @@ spec:
     delay:
       fixedDelay: 20ms
       percent: 100
-  precedence: 1
+  precedence: 10
   route:
   - labels:
       version: v1
