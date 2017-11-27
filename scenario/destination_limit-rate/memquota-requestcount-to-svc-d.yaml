@@ -9,22 +9,22 @@ metadata:
 spec:
   quotas:
   - name: requestcount-to-svc-d.quota.istio-system
-    # default total rate limit for requests to svc-d is 160qps
-    maxAmount: 160
+    # default total rate limit for requests to svc-d is 200qps
+    maxAmount: 200
     validDuration: 1s
     # The first matching override is applied.
     # A requestcount-svc-d instance is checked against override dimensions.
     overrides:
-    # The following override applies to traffic from svc-f with role normal,
+    # The following override applies to traffic from svc-b with role normal,
     # destined for the svc-d service with role normal.
     # The key names of the dimenstions will be matched with the key names defined in the corresponding quota
     # Exact matching will be applied
     - dimensions:
         destination: svc-d
         destinationRole: normal
-        source: svc-f
+        source: svc-b
         sourceRole: normal
-      maxAmount: 80
+      maxAmount: 100
       validDuration: 1s
 
 ---
