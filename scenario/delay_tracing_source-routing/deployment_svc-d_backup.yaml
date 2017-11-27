@@ -1,24 +1,29 @@
 ##################################################################################################
-# service C degrade
+# a backup deployment of the service D
 ##################################################################################################
 
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: svc-c-degrade
+  name: svc-d_backup
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: svc-c
+        app: svc-d
         version: v1
-        role: degrade
+        role: backup
     spec:
       containers:
-      - name: svc-c-degrade
-        image: jiuchen1986/go-micro-service:degrade
+      - name: svc-d_backup
+        image: jiuchen1986/go-micro-service:full
         imagePullPolicy: Always
         ports:
-        - containerPort: 8082              
+        - containerPort: 8082
+        env:
+        - name: TEST_SERVICE_NAME
+          value: svc-d
+        - name: TEST_SERVICE_VERSION
+          value: v1              
 ---

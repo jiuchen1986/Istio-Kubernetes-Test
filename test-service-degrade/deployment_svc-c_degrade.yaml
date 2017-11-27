@@ -1,0 +1,24 @@
+##################################################################################################
+# a degrade deployment for the service C
+##################################################################################################
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: svc-c_degrade
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: svc-c
+        version: v1
+        role: degrade
+    spec:
+      containers:
+      - name: svc-c_degrade
+        image: jiuchen1986/go-micro-service:degrade
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8082              
+---
