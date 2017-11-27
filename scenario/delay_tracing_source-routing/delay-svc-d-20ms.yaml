@@ -3,7 +3,7 @@
 apiVersion: config.istio.io/v1alpha2
 kind: RouteRule
 metadata:
-  name: delay_svc-d_20ms
+  name: delay-svc-d-20ms
   namespace: default
 spec:
   destination:

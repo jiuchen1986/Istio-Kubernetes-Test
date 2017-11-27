@@ -3,7 +3,7 @@
 apiVersion: config.istio.io/v1alpha2
 kind: RouteRule
 metadata:
-  name: route_svc-a_base
+  name: route-svc-a-base
   namespace: default
 spec:
   destination:
@@ -17,7 +17,7 @@ spec:
 apiVersion: config.istio.io/v1alpha2
 kind: RouteRule
 metadata:
-  name: route_svc-b_base
+  name: route-svc-b-base
   namespace: default
 spec:
   destination:
@@ -31,7 +31,7 @@ spec:
 apiVersion: config.istio.io/v1alpha2
 kind: RouteRule
 metadata:
-  name: route_svc-c_base
+  name: route-svc-c-base
   namespace: default
 spec:
   destination:
@@ -45,7 +45,7 @@ spec:
 apiVersion: config.istio.io/v1alpha2
 kind: RouteRule
 metadata:
-  name: route_svc-d_base
+  name: route-svc-d-base
   namespace: default
 spec:
   destination:
@@ -59,7 +59,7 @@ spec:
 apiVersion: config.istio.io/v1alpha2
 kind: RouteRule
 metadata:
-  name: route_svc-e_base
+  name: route-svc-e-base
   namespace: default
 spec:
   destination:
@@ -73,7 +73,7 @@ spec:
 apiVersion: config.istio.io/v1alpha2
 kind: RouteRule
 metadata:
-  name: route_svc-f_base
+  name: route-svc-f-base
   namespace: default
 spec:
   destination:
@@ -87,7 +87,7 @@ spec:
 apiVersion: config.istio.io/v1alpha2
 kind: RouteRule
 metadata:
-  name: route_svc-g_base
+  name: route-svc-g-base
   namespace: default
 spec:
   destination:

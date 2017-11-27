@@ -1,1 +1,1 @@
-kubectl apply -f test-service-degrade/svc-c_degrade.yaml
+kubectl apply -f test-service-degrade/svc-c-degrade.yaml
