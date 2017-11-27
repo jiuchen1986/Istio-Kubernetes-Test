@@ -1,11 +1,11 @@
 ##################################################################################################
-# a degrade deployment for the service C
+# a fallback deployment for the service C
 ##################################################################################################
 
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: svc-c-degrade
+  name: svc-c-fallback
 spec:
   replicas: 1
   template:
@@ -13,10 +13,10 @@ spec:
       labels:
         app: svc-c
         version: v1
-        role: degrade
+        role: fallback
     spec:
       containers:
-      - name: svc-c-degrade
+      - name: svc-c-fallback
         image: jiuchen1986/go-micro-service:degrade
         imagePullPolicy: Always
         ports:
