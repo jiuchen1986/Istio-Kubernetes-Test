@@ -14,8 +14,8 @@ spec:
     protocol: TCP
     targetPort: 8082
     name: http
-#    nodePort: 32000
-#  type: NodePort
+    nodePort: 32005
+  type: NodePort
   selector:
     app: svc-e
 ---
