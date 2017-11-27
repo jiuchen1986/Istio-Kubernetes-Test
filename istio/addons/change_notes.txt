@@ -1,0 +1,21 @@
+prometheus-test:
+
+add nodeport 32001
+
+
+
+zipkin-test:
+
+add nodeport 32002
+
+
+
+servicegraph-test
+
+add nodeport 32003
+
+
+
+grafana-test:
+
+add nodeport 32004
