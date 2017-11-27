@@ -30,6 +30,7 @@ spec:
       labels:
         app: svc-b
         version: v1
+        role: normal
     spec:
       containers:
       - name: svc-b
