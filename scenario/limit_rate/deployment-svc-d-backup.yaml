@@ -1,0 +1,29 @@
+##################################################################################################
+# a backup deployment of the service D
+##################################################################################################
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: svc-d-backup
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: svc-d
+        version: v1
+        role: backup
+    spec:
+      containers:
+      - name: svc-d-backup
+        image: jiuchen1986/go-micro-service:full
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8082
+        env:
+        - name: TEST_SERVICE_NAME
+          value: svc-d
+        - name: TEST_SERVICE_VERSION
+          value: v1              
+---

@@ -1,0 +1,23 @@
+# route the requests from svc-f to svc-d to the svc-d-backup
+
+apiVersion: config.istio.io/v1alpha2
+kind: RouteRule
+metadata:
+  name: route-svc-d-backup-from-svc-f
+  namespace: default
+spec:
+  destination:
+    name: svc-d
+  match:
+    source:
+      name: svc-f
+      labels:
+        version: v1
+        role: normal
+  precedence: 20
+  route:
+  - labels:
+      version: v1
+      role: backup
+---
+

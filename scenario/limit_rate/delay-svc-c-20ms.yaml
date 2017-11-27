@@ -1,0 +1,21 @@
+# Inject 20ms delay into the svc-c
+
+apiVersion: config.istio.io/v1alpha2
+kind: RouteRule
+metadata:
+  name: delay-svc-c-20ms
+  namespace: default
+spec:
+  destination:
+    name: svc-c
+  httpFault:
+    delay:
+      fixedDelay: 20ms
+      percent: 100
+  precedence: 10
+  route:
+  - labels:
+      version: v1
+      role: normal
+---
+
