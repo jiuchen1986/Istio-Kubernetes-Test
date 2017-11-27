@@ -22,7 +22,7 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: svc-b-v1
+  name: svc-b
 spec:
   replicas: 1
   template:
@@ -32,7 +32,7 @@ spec:
         version: v1
     spec:
       containers:
-      - name: svc-b-v1
+      - name: svc-b
         image: jiuchen1986/go-micro-service:simple
         imagePullPolicy: Always
         ports:
