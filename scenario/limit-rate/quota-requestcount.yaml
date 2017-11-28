@@ -1,0 +1,18 @@
+# a quota counting each request with dimensions of the versions and the roles
+
+apiVersion: config.istio.io/v1alpha2
+kind: quota
+metadata:
+  name: requestcount-role-version
+  namespace: istio-system
+spec:
+  dimensions:
+    source: source.labels["app"] | source.service | "unknown"
+    sourceRole: source.labels["role"] | "unknown"
+    sourceVersion: source.labels["version"] | "unknown"
+    destination: destination.labels["app"] | destination.service | "unknown"
+    destinationRole: destination.labels["role"] | "unknown"
+    destinationVersion: source.labels["version"] | "unknown"
+---
+
+

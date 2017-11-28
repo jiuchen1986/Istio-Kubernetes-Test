@@ -1,19 +1,20 @@
-# memquota to limit the total request rate to svc-d
-# and the request rate from svc-f to svc-d
+# memquota to limit the total request rate from svc-b
+# this is enabled by ruled the request with source as the svc-b to thie memquota
+# a override is also defined to limit the request rate from svc-b to svc-d
 
 apiVersion: config.istio.io/v1alpha2
 kind: memquota
 metadata:
-  name: rate-limit-to-svc-d-handler
+  name: rate-limit-from-svc-b-handler
   namespace: istio-system
 spec:
   quotas:
-  - name: requestcount-to-svc-d.quota.istio-system
-    # default total rate limit for requests to svc-d is 200qps
-    maxAmount: 200
+  - name: requestcount-role-version.quota.istio-system
+    # default total rate limit for requests from svc-b is 160qps
+    maxAmount: 160
     validDuration: 1s
     # The first matching override is applied.
-    # A requestcount-svc-d instance is checked against override dimensions.
+    # A requestcount-role-version instance is checked against override dimensions.
     overrides:
     # The following override applies to traffic from svc-b with role normal,
     # destined for the svc-d service with role normal.
@@ -24,7 +25,7 @@ spec:
         destinationRole: normal
         source: svc-b
         sourceRole: normal
-      maxAmount: 100
+      maxAmount: 80
       validDuration: 1s
 
 ---

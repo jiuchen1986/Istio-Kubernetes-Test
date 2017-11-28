@@ -1,0 +1,17 @@
+# Ruling the requestcount-role-version instances with the destination.service or destination.labels["app"] as svc-d
+# to be handled by the memquota "rate-limit-to-svc-d-handler"
+
+apiVersion: config.istio.io/v1alpha2
+kind: rule
+metadata:
+  name: rule-requestcount-to-svc-d
+  namespace: istio-system
+spec:
+  match: destination.labels["app"] == "svc-d" || destination.service == "svc-d"
+  actions:
+  - handler: rate-limit-to-svc-d-handler.memquota
+    instances:
+    - requestcount-role-version-no-source.quota
+    - requestcount-role-version.quota
+---
+

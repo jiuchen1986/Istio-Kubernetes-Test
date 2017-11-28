@@ -1,0 +1,30 @@
+# memquota to limit the total request rate to svc-d
+# this is enabled by only ruling the quota instances without the source dimensions
+# with the destination of svc-d to this quota
+
+apiVersion: config.istio.io/v1alpha2
+kind: memquota
+metadata:
+  name: rate-limit-to-svc-d-handler
+  namespace: istio-system
+spec:
+  quotas:
+# memquota to limit the total request rate to svc-d
+# this is enabled by only ruling the quota instances without the source dimensions
+# this memquota, where destination must be svc-d in the rule
+
+  - name: requestcount-role-version-no-source.quota.istio-system
+    # default total rate limit for requests to svc-d is 200qps
+    maxAmount: 200
+    validDuration: 1s
+
+# memquota to limit the request rate from each downstream service to svc-d
+# this is enabled by only ruling the quota instances without both source and destination dimensions
+# this memquota, where destination must be svc-d in the rule
+
+  - name: requestcount-role-version.quota.istio-system
+    # default total rate limit for requests to from each downstream sverice svc-d is 80qps
+    maxAmount: 80
+    validDuration: 1s
+---
+
