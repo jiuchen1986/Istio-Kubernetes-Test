@@ -9,9 +9,9 @@ metadata:
   namespace: istio-system
 spec:
   quotas:
-  - name: requestcount-role-version.quota.istio-system
-    # default total rate limit for requests from svc-f is 160qps
-    maxAmount: 160
+  - name: requestcount-role-version-svc-f.quota.istio-system
+    # default total rate limit for requests from svc-f is 100qps
+    maxAmount: 100
     validDuration: 1s
     # The first matching override is applied.
     # A requestcount-role-version instance is checked against override dimensions.
@@ -25,7 +25,7 @@ spec:
         destinationRole: normal
         source: svc-f
         sourceRole: normal
-      maxAmount: 80
+      maxAmount: 40
       validDuration: 1s
 
 ---

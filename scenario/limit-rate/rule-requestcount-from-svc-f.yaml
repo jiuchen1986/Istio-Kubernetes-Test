@@ -11,6 +11,6 @@ spec:
   actions:
   - handler: rate-limit-from-svc-f-handler.memquota
     instances:
-    - requestcount-role-version.quota
+    - requestcount-role-version-svc-f.quota
 ---
 

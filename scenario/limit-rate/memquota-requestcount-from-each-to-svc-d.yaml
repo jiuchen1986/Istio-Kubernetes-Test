@@ -5,13 +5,13 @@
 apiVersion: config.istio.io/v1alpha2
 kind: memquota
 metadata:
-  name: rate-limit-to-svc-d-handler
+  name: rate-limit-from-each-to-svc-d-handler
   namespace: istio-system
 spec:
   quotas:
-  - name: requestcount-role-version-no-source.quota.istio-system
-    # default total rate limit for requests to svc-d is 200qps
-    maxAmount: 200
+  - name: requestcount-role-version.quota.istio-system
+    # default total rate limit for requests to svc-d is 50qps
+    maxAmount: 50
     validDuration: 1s
 
 ---

@@ -4,13 +4,13 @@
 apiVersion: config.istio.io/v1alpha2
 kind: rule
 metadata:
-  name: rule-requestcount-to-svc-d
+  name: rule-requestcount-from-each-to-svc-d
   namespace: istio-system
 spec:
   match: destination.labels["app"] == "svc-d" || destination.service == "svc-d"
   actions:
-  - handler: rate-limit-to-svc-d-handler.memquota
+  - handler: rate-limit-from-each-to-svc-d-handler.memquota
     instances:
-    - requestcount-role-version-no-source.quota
+    - requestcount-role-version.quota
 ---
 

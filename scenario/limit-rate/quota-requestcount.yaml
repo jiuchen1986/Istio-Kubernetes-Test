@@ -12,7 +12,7 @@ spec:
     sourceVersion: source.labels["version"] | "unknown"
     destination: destination.labels["app"] | destination.service | "unknown"
     destinationRole: destination.labels["role"] | "unknown"
-    destinationVersion: source.labels["version"] | "unknown"
+    destinationVersion: destination.labels["version"] | "unknown"
 ---
 
 

@@ -9,7 +9,7 @@ metadata:
   namespace: istio-system
 spec:
   quotas:
-  - name: requestcount-role-version.quota.istio-system
+  - name: requestcount-role-version-svc-b.quota.istio-system
     # default total rate limit for requests from svc-b is 160qps
     maxAmount: 160
     validDuration: 1s
