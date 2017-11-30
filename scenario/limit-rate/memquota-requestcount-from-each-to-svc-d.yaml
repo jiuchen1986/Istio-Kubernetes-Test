@@ -1,5 +1,5 @@
-# memquota to limit the total request rate to svc-d
-# this is enabled by only ruling the quota instances without destination dimensions, and
+# memquota to limit the request rate from each source to svc-d
+# this is enabled by only ruling the quota instances with both source and destination dimensions, and
 # with the destination of svc-d to this quota
 
 apiVersion: config.istio.io/v1alpha2
@@ -10,8 +10,8 @@ metadata:
 spec:
   quotas:
   - name: requestcount-role-version.quota.istio-system
-    # default total rate limit for requests to svc-d is 50qps
-    maxAmount: 50
+    # default rate limit for request from each to svc-d is 80qps
+    maxAmount: 80
     validDuration: 1s
 
 ---

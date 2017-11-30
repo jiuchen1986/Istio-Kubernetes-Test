@@ -1,0 +1,48 @@
+# a quota counting each request with dimensions of the versions and the roles without the destination dimensions
+
+apiVersion: config.istio.io/v1alpha2
+kind: quota
+metadata:
+  name: requestcount-role-version-svc-b-no-destination
+  namespace: istio-system
+spec:
+  dimensions:
+    source: source.labels["app"] | source.service | "unknown"
+    sourceRole: source.labels["role"] | "unknown"
+    sourceVersion: source.labels["version"] | "unknown"
+---
+
+
+# memquota to limit the total request rate from svc-b
+# this is enabled by ruled the request with source as the svc-b and without the destination dimensions to this memquota
+
+apiVersion: config.istio.io/v1alpha2
+kind: memquota
+metadata:
+  name: rate-limit-from-svc-b-total-handler
+  namespace: istio-system
+spec:
+  quotas:
+  - name: requestcount-role-version-svc-b-no-destination.quota.istio-system
+    # default total rate limit for requests from svc-b is 120qps
+    maxAmount: 120
+    validDuration: 1s
+
+---
+
+# Ruling the requestcount-role-version-svc-b-no-destination instances with the source.service or source.labels["app"] as svc-b
+# to be handled by the memquota "rate-limit-from-svc-b-total-handler"
+
+apiVersion: config.istio.io/v1alpha2
+kind: rule
+metadata:
+  name: rule-requestcount-from-svc-b-total
+  namespace: istio-system
+spec:
+  match: source.labels["app"] == "svc-b" || source.service == "svc-b"
+  actions:
+  - handler: rate-limit-from-svc-b-total-handler.memquota
+    instances:
+    - requestcount-role-version-svc-b-no-destination.quota
+---
+

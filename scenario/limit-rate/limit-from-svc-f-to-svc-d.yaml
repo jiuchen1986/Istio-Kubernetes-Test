@@ -1,0 +1,66 @@
+# a quota counting each request with dimensions of the versions and the roles
+
+apiVersion: config.istio.io/v1alpha2
+kind: quota
+metadata:
+  name: requestcount-role-version-svc-f
+  namespace: istio-system
+spec:
+  dimensions:
+    source: source.labels["app"] | source.service | "unknown"
+    sourceRole: source.labels["role"] | "unknown"
+    sourceVersion: source.labels["version"] | "unknown"
+    destination: destination.labels["app"] | destination.service | "unknown"
+    destinationRole: destination.labels["role"] | "unknown"
+    destinationVersion: destination.labels["version"] | "unknown"
+---
+
+
+# memquota to limit the total request rate from svc-f
+# this is enabled by ruled the request with source as the svc-f to thie memquota
+# a override is also defined to limit the request rate from svc-f to svc-d
+
+apiVersion: config.istio.io/v1alpha2
+kind: memquota
+metadata:
+  name: rate-limit-from-svc-f-handler
+  namespace: istio-system
+spec:
+  quotas:
+  - name: requestcount-role-version-svc-f.quota.istio-system
+    # default total rate limit for requests from svc-f is 100qps
+    maxAmount: 100
+    validDuration: 1s
+    # The first matching override is applied.
+    # A requestcount-role-version instance is checked against override dimensions.
+    overrides:
+    # The following override applies to traffic from svc-f with role normal,
+    # destined for the svc-d service with role normal.
+    # The key names of the dimenstions will be matched with the key names defined in the corresponding quota
+    # Exact matching will be applied
+    - dimensions:
+        destination: svc-d
+        destinationRole: normal
+        source: svc-f
+        sourceRole: normal
+      maxAmount: 40
+      validDuration: 1s
+
+---
+
+# Ruling the requestcount-role-version instances with the source.service or source.labels["app"] as svc-f
+# to be handled by the memquota "rate-limit-from-svc-f-handler"
+
+apiVersion: config.istio.io/v1alpha2
+kind: rule
+metadata:
+  name: rule-requestcount-from-svc-f
+  namespace: istio-system
+spec:
+  match: source.labels["app"] == "svc-f" || source.service == "svc-f"
+  actions:
+  - handler: rate-limit-from-svc-f-handler.memquota
+    instances:
+    - requestcount-role-version-svc-f.quota
+---
+

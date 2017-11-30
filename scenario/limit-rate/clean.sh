@@ -20,3 +20,5 @@ kubectl delete -f quota-requestcount-svc-f.yaml
 kubectl delete -f quota-requestcount.yaml
 kubectl delete -f memquota-requestcount-from-each-to-svc-d.yaml
 kubectl delete -f rule-requestcount-from-each-to-svc-d.yaml
+
+kubectl delete -f limit-from-svc-b-total.yaml

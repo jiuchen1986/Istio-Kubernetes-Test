@@ -1,5 +1,5 @@
 # memquota to limit the total request rate to svc-d
-# this is enabled by only ruling the quota instances without destination dimensions, and
+# this is enabled by only ruling the quota instances without source dimensions, and
 # with the destination of svc-d to this quota
 
 apiVersion: config.istio.io/v1alpha2

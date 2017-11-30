@@ -1,0 +1,49 @@
+# a quota counting each request with dimensions of the destination's versions and the roles
+
+apiVersion: config.istio.io/v1alpha2
+kind: quota
+metadata:
+  name: requestcount-role-version-no-source
+  namespace: istio-system
+spec:
+  dimensions:
+    destination: destination.labels["app"] | destination.service | "unknown"
+    destinationRole: destination.labels["role"] | "unknown"
+    destinationVersion: destination.labels["version"] | "unknown"
+---
+
+
+# memquota to limit the total request rate to svc-d
+# this is enabled by only ruling the quota instances without source dimensions, and
+# with the destination of svc-d to this quota
+
+apiVersion: config.istio.io/v1alpha2
+kind: memquota
+metadata:
+  name: rate-limit-to-svc-d-handler
+  namespace: istio-system
+spec:
+  quotas:
+  - name: requestcount-role-version-no-source.quota.istio-system
+    # default total rate limit for requests to svc-d is 200qps
+    maxAmount: 200
+    validDuration: 1s
+
+---
+
+# Ruling the requestcount-role-version instances with the destination.service or destination.labels["app"] as svc-d
+# to be handled by the memquota "rate-limit-to-svc-d-handler"
+
+apiVersion: config.istio.io/v1alpha2
+kind: rule
+metadata:
+  name: rule-requestcount-to-svc-d
+  namespace: istio-system
+spec:
+  match: destination.labels["app"] == "svc-d" || destination.service == "svc-d"
+  actions:
+  - handler: rate-limit-to-svc-d-handler.memquota
+    instances:
+    - requestcount-role-version-no-source.quota
+---
+
