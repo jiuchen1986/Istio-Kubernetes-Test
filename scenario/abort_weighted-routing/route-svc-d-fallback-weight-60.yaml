@@ -1,0 +1,22 @@
+# route the 60 percent requests to svc-d to the svc-d-fallback
+
+apiVersion: config.istio.io/v1alpha2
+kind: RouteRule
+metadata:
+  name: route-svc-d-fallback-60p
+  namespace: default
+spec:
+  destination:
+    name: svc-d
+  precedence: 20
+  route:
+  - labels:
+      version: v1
+      role: fallback
+    weight: 60
+  - labels:
+      version: v1
+      role: normal
+    weight: 40
+---
+
