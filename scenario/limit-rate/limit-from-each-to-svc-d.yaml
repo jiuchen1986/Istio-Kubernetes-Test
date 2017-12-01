@@ -28,8 +28,8 @@ metadata:
 spec:
   quotas:
   - name: requestcount-role-version.quota.istio-system
-    # default rate limit for request from each source to svc-d is 80qps
-    maxAmount: 80
+    # default rate limit for request from each source to svc-d is 50qps
+    maxAmount: 50
     validDuration: 1s
 
 ---
