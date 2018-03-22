@@ -19,12 +19,15 @@ spec:
   selector:
     app: svc-e
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: svc-e
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: svc-e
   template:
     metadata:
       labels:
@@ -44,7 +47,7 @@ spec:
         - name: TEST_SERVICE_VERSION
           value: v1              
 ---
-# apiVersion: extensions/v1beta1
+# apiVersion: apps/v1
 # kind: Deployment
 # metadata:
   # name: svc-e-v2
@@ -68,7 +71,7 @@ spec:
         # - name: TEST_SERVICE_VERSION
           # value: v2
 # ---
-# apiVersion: extensions/v1beta1
+# apiVersion: apps/v1
 # kind: Deployment
 # metadata:
   # name: svc-e-v3

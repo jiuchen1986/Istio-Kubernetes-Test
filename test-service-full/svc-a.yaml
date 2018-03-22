@@ -19,12 +19,15 @@ spec:
   selector:
     app: svc-a
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: svc-a
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: svc-a
   template:
     metadata:
       labels:
